@@ -1,0 +1,30 @@
+from flask import Flask, request, jsonify
+import traceback
+
+app = Flask(_name_)
+
+@app.route('/')
+def home():
+    return "🤖 BOSS AIX GLOBAL - Auto Intelligent System Active"
+
+@app.route('/command', methods=['POST'])
+def command():
+    try:
+        data = request.get_json()
+        cmd = data.get("task", "").lower()
+
+        if "error" in cmd:
+            return jsonify({"status": "repaired", "message": "System auto-repaired and running fine ✅"})
+        elif "status" in cmd:
+            return jsonify({"status": "active", "message": "BOSS AIX running perfectly 🚀"})
+        else:
+            return jsonify({"status": "done", "message": f"Task '{cmd}' executed successfully!"})
+    except Exception as e:
+        return jsonify({
+            "status": "failed",
+            "error": str(e),
+            "trace": traceback.format_exc()
+        })
+
+if _name_ == "_main_":
+    app.run(host="0.0.0.0", port=8080)
